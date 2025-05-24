@@ -6,20 +6,21 @@
     <title>Saat&Saat - Aşkla Güzelleşen Saatler</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet"> <style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
         :root {
-            --bg: #FFF8F8; /* Çok açık pembe arka plan */
-            --text: #4B3832; /* Koyu kahvemsi metin */
-            --muted: #776B66; /* Daha yumuşak metin */
-            --accent: #E11D48; /* Canlı romantik pembe/kırmızı */
-            --accent-bg: #FDECF0; /* Açık pembe vurgu arka planı */
-            --highlight-gold: #B08D57; /* Zarif altın vurgu */
+            --bg: #FFF8F8;
+            --text: #4B3832;
+            --muted: #776B66;
+            --accent: #E11D48;
+            --accent-bg: #FDECF0;
+            --highlight-gold: #B08D57;
             --font: 'Roboto', sans-serif;
             --font-headings: 'Playfair Display', serif;
-            --font-special: 'Dancing Script', cursive; /* Özel başlıklar için */
+            --font-special: 'Dancing Script', cursive;
             --carousel-radius: 12px;
-            --card-shadow: 0 6px 20px rgba(198, 160, 170, 0.15); /* Yumuşak pembe tonlu gölge */
-            --love-light: #FFB6C1; /* Açık pembe ışık */
+            --card-shadow: 0 6px 20px rgba(198, 160, 170, 0.15);
+            --love-light: #FFB6C1;
         }
 
         * {
@@ -57,10 +58,10 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(198, 160, 170, 0.2);
             position: relative;
-            overflow: hidden; /* İçerideki ::before için */
+            overflow: hidden;
         }
 
-        .container::before { /* Hafif bir Sevgililer Günü dokunuşu */
+        .container::before {
             content: "❤️";
             position: absolute;
             top: -20px;
@@ -81,7 +82,7 @@
         }
 
         .brand-logo-container img {
-            max-height: 140px; /* Logonuzun boyutuna göre ayarlayın */
+            max-height: 140px;
             width: auto;
         }
 
@@ -95,9 +96,9 @@
         }
 
         h1 {
-            font-size: 2.8rem; /* Biraz daha büyük */
+            font-size: 2.8rem;
             color: var(--accent);
-            font-family: var(--font-special); /* Özel Sevgililer Günü yazı tipi */
+            font-family: var(--font-special);
             margin-bottom: 10px;
         }
 
@@ -122,12 +123,12 @@
             font-style: italic;
         }
 
-        /* CAROUSEL STYLES */
         .carousel-container {
             margin: 40px 0;
-            padding: 12px 0;
+            padding: 12px 0 50px; /* Alt padding noktalar için artırıldı */
             background-color: var(--accent-bg);
             border-radius: 16px;
+            position: relative; /* Noktaların mutlak konumlandırılması için */
         }
 
         .carousel-title {
@@ -151,15 +152,15 @@
 
         .carousel {
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Slide'ların taşmasını engellemek için bu kalmalı */
             border-radius: var(--carousel-radius);
-            -webkit-tap-highlight-color: transparent; /* Mobil dokunma vurgusunu kaldır */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .carousel-inner {
             display: flex;
-            user-select: none; /* Metin seçmeyi engelle */
-            cursor: grab; /* Sürükleme imleci */
+            user-select: none;
+            cursor: grab;
             transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         .carousel-inner.is-dragging {
@@ -168,7 +169,7 @@
 
         .carousel-slide {
             min-width: 100%;
-            padding: 15px; /* Daha büyük görseller için padding azaltıldı */
+            padding: 15px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -176,16 +177,16 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .carousel-slide:hover {
-            transform: translateY(-5px); /* Ürün üzerine gelince hafif yukarı kalkma efekti */
+            transform: translateY(-5px);
         }
 
         .product-image {
-            max-width: 95%; /* Görselin genişliğini artırdık */
+            max-width: 95%;
             height: auto;
-            max-height: 330px; /* Görselin maksimum yüksekliğini artırdık */
+            max-height: 330px;
             object-fit: contain;
             border-radius: 10px;
-            margin-bottom: 15px; /* Alt boşluğu biraz azalttık */
+            margin-bottom: 15px;
             box-shadow: var(--card-shadow);
         }
 
@@ -203,74 +204,25 @@
             color: var(--muted);
             text-align: center;
             margin-bottom: 10px;
-            min-height: 40px; /* Açıklama alanı için sabit yükseklik */
+            min-height: 40px;
         }
 
-        /* Carousel Kontrolleri (Oklar) */
-        .carousel-controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            padding: 0 15px; /* Oklar için kenarlardan boşluk */
-            pointer-events: none; /* Oklar sadece görünecek, altındaki slide swipe edilebilir olacak */
-            z-index: 3;
-            opacity: 0; /* Başlangıçta gizli */
-            transition: opacity 0.3s ease-in-out;
-        }
-        .carousel:hover .carousel-controls { /* Fare üzerine gelince okları göster */
-           opacity: 1;
-        }
-        /* Dokunmatik cihazlarda okları her zaman görünür yap */
-        .carousel-controls.mobile-visible {
-            opacity: 1;
-            pointer-events: auto; /* Dokunmatikte tıklanabilir yap */
-        }
-        .carousel-controls.mobile-visible button {
-            pointer-events: all;
-        }
-
-        .carousel-controls button {
-            pointer-events: all; /* Ok butonları tıklanabilir olsun */
-            background: rgba(var(--accent-rgb, 225, 29, 72), 0.5); /* Ana accent renginin yarı saydam hali */
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            outline: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .carousel-controls button:hover {
-            background: rgba(var(--accent-rgb, 225, 29, 72), 0.8);
-            transform: scale(1.1);
-        }
-
-        /* Carousel Noktaları */
         .carousel-dots {
-    position: absolute; /* Carousel-inner'a göre konumlanacak */
-    bottom: -16px; /* Mevcut değer */
-    bottom: -25px; /* Daha fazla boşluk için bu veya daha büyük bir değer deneyin */
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 2;
-    padding: 5px 0;
-}
+            position: absolute;
+            bottom: 15px; /* .carousel-container'ın alt padding alanına göre konumlandı */
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 2;
+            padding: 5px 0; /* Noktaların kendi içindeki dikey boşluğu */
+        }
 
         .carousel-dot {
             display: inline-block;
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: var(--love-light); /* Daha yumuşak bir renk */
+            background-color: var(--love-light);
             margin: 0 5px;
             cursor: pointer;
             border: none;
@@ -286,7 +238,6 @@
             transform: scale(1.2);
         }
 
-        /* Paragraf Stilleri */
         .paragraph-primary {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -294,12 +245,11 @@
         .paragraph-primary p {
             padding: 5px 0;
         }
-        .paragraph-primary p strong { /* Yazı içindeki vurgular */
+        .paragraph-primary p strong {
             color: var(--accent);
             font-weight: 600;
         }
 
-        /* CTA Section */
         .integrated-cta-section {
             text-align: center;
             margin-top: 50px;
@@ -339,7 +289,7 @@
         }
 
         .integrated-cta-section .button:hover {
-            background-color: #c7153f; /* Accent renginin biraz koyusu */
+            background-color: #c7153f;
             transform: translateY(-3px) scale(1.03);
         }
         .footer-note {
@@ -356,21 +306,19 @@
             text-decoration: underline;
         }
 
-         @media (max-width: 768px) {
+        @media (max-width: 768px) {
             h1 { font-size: 2.4rem; }
             h2 { font-size: 1.6rem; }
             .container { padding: 20px 20px 30px; }
-            .product-image { max-width: 85%; max-height: 280px;} /* Mobil için de ayarlandı */
-            .carousel-controls { padding: 0 5px; }
-            .carousel-controls button { width: 36px; height: 36px; font-size: 1.1rem; }
+            .product-image { max-width: 85%; max-height: 280px;}
         }
-         @media (max-width: 480px) { /* Daha küçük ekranlar için ek ayar */
+        @media (max-width: 480px) {
             .product-image { max-width: 90%; max-height: 240px;}
             h1 { font-size: 2.2rem; }
             .cta-final-text { font-size: 1.1rem;}
             .integrated-cta-section .button { font-size: 1rem; padding: 12px 30px;}
         }
-    </style>
+</style>
 </head>
 <body>
     <div class="progress-bar" id="progressBar"></div>
@@ -383,7 +331,7 @@
         <p class="article-meta">Saat&Saat Özel Sevgililer Günü Koleksiyonu</p>
 
         <div class="paragraph-primary">
-            <p>Bu Sevgililer Günü'nde, <strong>aşkınız kadar özel</strong> ve <strong>zaman kadar değerli</strong> bir hediye ile sevdiğinizi şımartın. Her bakışta en güzel anlarınızı hatırlatacak, zarafet ve tutkuyla tasarlanmış <strong>“Aşkla Güzelleşen Saatler”</strong>strong> koleksiyonumuz, Saat&Saat mağazalarında ve online platformumuzda sizleri bekliyor.</p>
+            <p>Bu Sevgililer Günü'nde, <strong>aşkınız kadar özel</strong> ve <strong>zaman kadar değerli</strong> bir hediye ile sevdiğinizi şımartın. Her bakışta en güzel anlarınızı hatırlatacak, zarafet ve tutkuyla tasarlanmış <strong>“Aşkla Güzelleşen Saatler”</strong> koleksiyonumuz, Saat&Saat mağazalarında ve online platformumuzda sizleri bekliyor.</p>
         </div>
 
         <div class="carousel-container">
@@ -431,12 +379,8 @@
                         <p class="product-description">Metalik gri rengi ve gümüş tonundaki kadranıyla modern zarafet.</p>
                     </div>
                 </div>
-                <div class="carousel-controls">
-                    <button class="prev" aria-label="Önceki Saat">‹</button> <button class="next" aria-label="Sonraki Saat">›</button>
-                </div>
-                <div class="carousel-dots"></div>
             </div>
-        </div>
+            <div class="carousel-dots"></div> </div>
 
         <div class="paragraph-primary">
             <p>Sevginizi en şık şekilde ifade etmek için <strong>Versace</strong>'nin cüretkar tasarımlarından, <strong>Guess</strong>'in romantik parıltısına, <strong>Welder</strong>'in değişken ruhundan <strong>Lacoste</strong>'un sportif şıklığına kadar dünyaca ünlü markaların en seçkin modellerini bir araya getirdik. Her bir saat, sevginizin zamansızlığını ve değerini simgelemek üzere özenle seçildi.</p>
@@ -451,7 +395,7 @@
         <p class="footer-note">Tüm saat modelleri Saat&Saat güvencesiyle sunulmaktadır. <br>Detaylı bilgi ve diğer modeller için <a href="[SAAT_VE_SAAT_ANA_SAYFA_URL_BURAYA]" target="_blank">web sitemizi</a> ziyaret edebilirsiniz.</p>
     </div>
 
-    <script>
+<script>
         // Progress Bar Script
         const progressBar = document.getElementById('progressBar');
         if (progressBar) {
@@ -465,16 +409,18 @@
 
         // CAROUSEL SCRIPT
         function initializeCarousel(carouselId) {
-            const carousel = document.getElementById(carouselId);
-            if (!carousel) return;
+            const carouselEl = document.getElementById(carouselId); // .carousel div'i
+            if (!carouselEl) return;
 
-            const inner = carousel.querySelector('.carousel-inner');
-            const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
-            const prevButton = carousel.querySelector('.prev');
-            const nextButton = carousel.querySelector('.next');
-            const dotsContainer = carousel.querySelector('.carousel-dots');
-            const carouselControls = carousel.querySelector('.carousel-controls');
+            const inner = carouselEl.querySelector('.carousel-inner');
+            const slides = Array.from(carouselEl.querySelectorAll('.carousel-slide'));
+            // .carousel-dots artık .carouselEl'in ebeveyninin (.carousel-container) bir çocuğu
+            const dotsContainer = carouselEl.parentNode.querySelector('.carousel-dots'); 
 
+            if (!dotsContainer) {
+                console.error("Carousel dots container not found!");
+                return;
+            }
             if (slides.length === 0) return;
 
             let currentIndex = 0;
@@ -483,7 +429,6 @@
             let currentTranslate = 0;
             let prevTranslate = 0;
             
-            // slideWidth fonksiyonunu, her çağrıldığında güncel genişliği alacak şekilde düzeltiyoruz.
             const slideWidth = () => slides.length > 0 ? slides[0].offsetWidth : 0; 
 
             function updateDots() {
@@ -502,7 +447,7 @@
             }
 
             function setPositionByIndex() {
-                if(slideWidth() === 0 && slides.length > 0) { // Eğer ilk başta genişlik 0 ise kısa bir gecikmeyle tekrar dene
+                if(slideWidth() === 0 && slides.length > 0) { 
                     setTimeout(setPositionByIndex, 100);
                     return;
                 }
@@ -511,26 +456,19 @@
                 inner.style.transform = `translateX(${currentTranslate}px)`;
             }
             
-            function animation() { // Bu fonksiyon sürükleme sırasında kullanılmıyor, kaldırılabilir veya farklı bir amaç için tutulabilir.
-                inner.style.transform = `translateX(${currentTranslate}px)`;
-                // if (isDragging) requestAnimationFrame(animation); // Bu satır sürükleme için gereksiz.
-            }
-
             function dragStart(event) {
-                // Sadece tek dokunma/fare ile sürüklemeyi etkinleştir
                 if (event.type.includes('touch') && event.touches.length > 1) return;
 
                 isDragging = true;
                 startPos = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                inner.style.transition = 'none'; // Sürüklerken animasyonu kaldır
+                inner.style.transition = 'none'; 
                 inner.classList.add('is-dragging');
             }
 
             function drag(event) {
                 if (isDragging) {
-                    // Sadece tek dokunma/fare ile sürüklemeyi etkinleştir
                     if (event.type.includes('touch') && event.touches.length > 1) {
-                        dragEnd(); // Çoklu dokunmada sürüklemeyi bitir
+                        dragEnd(); 
                         return;
                     }
                     const currentPosition = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
@@ -542,11 +480,10 @@
             function dragEnd() {
                 if (!isDragging) return;
                 isDragging = false;
-                inner.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)'; // Animasyonu geri ekle
+                inner.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)'; 
                 inner.classList.remove('is-dragging');
 
                 const movedBy = currentTranslate - prevTranslate;
-                // Sürükleme mesafesine göre slayt değiştirme eşiği (slide genişliğinin bir kısmı)
                 const threshold = slideWidth() / 4; 
 
                 if (movedBy < -threshold && currentIndex < slides.length - 1) {
@@ -564,62 +501,35 @@
                 setPositionByIndex();
                 updateDots();
             }
-
-            if (prevButton && nextButton) {
-                prevButton.addEventListener('click', () => {
-                    if (currentIndex > 0) currentIndex--;
-                    else currentIndex = slides.length -1; // Başa dön
-                    setPositionByIndex();
-                    updateDots();
-                });
-                nextButton.addEventListener('click', () => {
-                    if (currentIndex < slides.length - 1) currentIndex++;
-                    else currentIndex = 0; // Sona dön
-                    setPositionByIndex();
-                    updateDots();
-                });
-            }
             
-            // Touch & Mouse Events
             inner.addEventListener('mousedown', dragStart);
             inner.addEventListener('touchstart', dragStart, { passive: true });
 
-            document.addEventListener('mousemove', drag); // document üzerinde dinle
-            document.addEventListener('touchmove', drag, { passive: true }); // document üzerinde dinle
+            document.addEventListener('mousemove', drag); 
+            document.addEventListener('touchmove', drag, { passive: true }); 
 
-            document.addEventListener('mouseup', dragEnd); // document üzerinde dinle
-            document.addEventListener('touchend', dragEnd); // document üzerinde dinle
+            document.addEventListener('mouseup', dragEnd); 
+            document.addEventListener('touchend', dragEnd); 
             document.addEventListener('touchcancel', dragEnd);
-
-
-            // Dokunmatik cihazlarda kontrol oklarını görünür yap
-            const isTouchDevice = () => ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-            if (isTouchDevice() && carouselControls) {
-                carouselControls.classList.add('mobile-visible');
-            }
 
             let resizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
-                     // slideWidth() çağrısı zaten güncel genişliği alacak.
-                    setPositionByIndex(); // Yeniden boyutlandırmada konumu güncelle
+                    setPositionByIndex(); 
                 }, 250);
             });
 
-            // İlk yüklemede ve resimler yüklendikten sonra pozisyonu ayarla
-            // Eğer sayfa çok hızlı yüklenirse slideWidth 0 olabilir.
             if (slideWidth() === 0 && slides.length > 0) {
-                 setTimeout(setPositionByIndex, 100); // Kısa bir gecikme ile tekrar dene
+                setTimeout(setPositionByIndex, 100); 
             } else {
                 setPositionByIndex();
             }
-            updateDots();
+            updateDots(); // updateDots'u ilk yüklemede de çağır
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeCarousel('productCarousel');
-            // Accent renginin RGB değerlerini CSS değişkeni olarak ayarla (Okların yarı saydam arka planı için)
             const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
             if (accentColor) {
                 let r=0, g=0, b=0;
@@ -634,7 +544,7 @@
                         g = parseInt(hex.substring(2, 4), 16);
                         b = parseInt(hex.substring(4, 6), 16);
                     }
-                } else if (accentColor.startsWith('rgb')) { // rgb veya rgba formatını da yakala
+                } else if (accentColor.startsWith('rgb')) { 
                     const parts = accentColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
                     if (parts && parts.length >= 4) {
                         r = parseInt(parts[1]);
@@ -642,15 +552,15 @@
                         b = parseInt(parts[3]);
                     }
                 }
-                if (r || g || b ) { // Eğer renk parse edilebildiyse
-                   document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`);
-                } else { // Varsayılan bir RGB ayarla eğer parse edilemezse
-                    document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); // Varsayılan accent RGB
+                if (r || g || b ) { 
+                    document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`);
+                } else { 
+                    document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); 
                 }
-            } else { // Accent rengi tanımlı değilse varsayılan bir RGB ayarla
-                 document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
+            } else { 
+                document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
             }
         });
-    </script>
+</script>
 </body>
 </html>
