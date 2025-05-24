@@ -18,7 +18,7 @@
             --highlight-gold: #B08D57;
             --font: 'Roboto', sans-serif;
             --font-headings: 'Playfair Display', serif;
-            --font-special: 'Dancing Script', cursive; /* Sayılar için bu fontu kullanacağız */
+            --font-special: 'Dancing Script', cursive; 
             --carousel-radius: 12px;
             --card-shadow: 0 6px 20px rgba(198, 160, 170, 0.15);
             --love-light: #FFB6C1;
@@ -29,7 +29,6 @@
 
         .progress-bar { position: fixed; top: 0; left: 0; height: 4px; width: 0; background: linear-gradient(to right, var(--love-light), var(--accent)); border-radius: 2px; box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.3); z-index: 1001; transition: width 0.25s ease-out; }
 
-        /* Ana Geri Sayım Kapsayıcısı */
         .valentine-countdown {
             background-color: var(--accent-bg);
             padding: 25px 15px;
@@ -49,7 +48,6 @@
             font-weight: 700;
         }
 
-        /* Yeni Zarif Geri Sayım Stilleri */
         .elegant-countdown-timer {
             display: flex;
             align-items: baseline; 
@@ -97,7 +95,6 @@
             align-self: center; 
             line-height: 1; 
         }
-        /* ... (diğer CSS stilleriniz olduğu gibi kalacak) ... */
         .container { max-width: 720px; margin: 0 auto 40px auto; padding: 25px 30px 40px; background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(198, 160, 170, 0.2); position: relative; overflow: hidden; }
         .container::before { content: "❤️"; position: absolute; top: -20px; right: -20px; font-size: 100px; color: var(--accent); opacity: 0.08; transform: rotate(20deg); z-index: 0; pointer-events: none; }
         .brand-logo-container { display: flex; justify-content: center; margin-bottom: -35px; }
@@ -136,7 +133,6 @@
 
 
         @media (max-width: 768px) {
-            /* Zarif Geri Sayım Mobil Stilleri */
             .elegant-countdown-timer { gap: 6px; }
             .time-block { padding: 8px 12px; min-width: 65px; border-radius: 6px; }
             .time-value { font-size: 2.2rem; }
@@ -254,7 +250,7 @@
             });
         }
 
-        // CAROUSEL SCRIPT (Değişiklik yok, önceki gibi)
+        // CAROUSEL SCRIPT
         function initializeCarousel(carouselId) {
             const carouselEl = document.getElementById(carouselId);
             if (!carouselEl) return;
@@ -341,26 +337,53 @@
                 <div class="countdown-title">Sevgililer Günü'ne Kalan Süre</div>
                 <div class="elegant-countdown-timer">
                     <div class="time-block">
-                        <span class="time-value" id="elegantDays">000</span>
+                        <span class="time-value" id="elegantDays">---</span>
                         <span class="time-label">Gün</span>
                     </div>
                     <span class="time-separator">:</span>
                     <div class="time-block">
-                        <span class="time-value" id="elegantHours">00</span>
+                        <span class="time-value" id="elegantHours">--</span>
                         <span class="time-label">Saat</span>
                     </div>
                     <span class="time-separator">:</span>
                     <div class="time-block">
-                        <span class="time-value" id="elegantMinutes">00</span>
+                        <span class="time-value" id="elegantMinutes">--</span>
                         <span class="time-label">Dakika</span>
                     </div>
                     <span class="time-separator">:</span>
                     <div class="time-block">
-                        <span class="time-value" id="elegantSeconds">00</span>
+                        <span class="time-value" id="elegantSeconds">--</span>
                         <span class="time-label">Saniye</span>
                     </div>
                 </div>
             `;
+        }
+
+        function updateCountdownDisplay(targetDate, elements) {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                if (elements.countdownElement.querySelector('.countdown-title')) {
+                    elements.countdownElement.querySelector('.countdown-title').innerHTML = "Mutlu Sevgililer Günü! ❤️";
+                }
+                if (elements.countdownElement.querySelector('.elegant-countdown-timer')) {
+                    elements.countdownElement.querySelector('.elegant-countdown-timer').innerHTML = ""; 
+                }
+                return true; 
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            elements.daysEl.textContent = days.toString().padStart(3, '0');
+            elements.hoursEl.textContent = hours.toString().padStart(2, '0');
+            elements.minutesEl.textContent = minutes.toString().padStart(2, '0');
+            elements.secondsEl.textContent = seconds.toString().padStart(2, '0');
+            
+            return false; 
         }
 
         function startValentineCountdown() {
@@ -369,42 +392,28 @@
 
             setupElegantCountdownHTML(countdownElement); 
 
-            const daysEl = document.getElementById('elegantDays');
-            const hoursEl = document.getElementById('elegantHours');
-            const minutesEl = document.getElementById('elegantMinutes');
-            const secondsEl = document.getElementById('elegantSeconds');
+            const elements = {
+                countdownElement: countdownElement,
+                daysEl: document.getElementById('elegantDays'),
+                hoursEl: document.getElementById('elegantHours'),
+                minutesEl: document.getElementById('elegantMinutes'),
+                secondsEl: document.getElementById('elegantSeconds')
+            };
 
-            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+            if (!elements.daysEl || !elements.hoursEl || !elements.minutesEl || !elements.secondsEl) {
                 return;
             }
 
             const targetDate = new Date("2026-02-14T00:00:00").getTime();
 
+            if (updateCountdownDisplay(targetDate, elements)) {
+                return; 
+            }
+
             const interval = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-
-                if (distance < 0) {
-                    clearInterval(interval);
-                    // Sadece başlığı ve mesajı göster, zaman bloklarını kaldırmaya gerek yok, JS zaten güncellemeyecek.
-                    // İsterseniz countdownElement.querySelector('.elegant-countdown-timer').style.display = 'none'; ile gizleyebilirsiniz.
-                    countdownElement.querySelector('.countdown-title').innerHTML = "Mutlu Sevgililer Günü! ❤️";
-                    if(countdownElement.querySelector('.elegant-countdown-timer')) {
-                         countdownElement.querySelector('.elegant-countdown-timer').innerHTML = ""; // Zaman bloklarını temizle
-                    }
-                    return;
+                if (updateCountdownDisplay(targetDate, elements)) {
+                    clearInterval(interval); 
                 }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                daysEl.textContent = days.toString().padStart(3, '0');
-                hoursEl.textContent = hours.toString().padStart(2, '0');
-                minutesEl.textContent = minutes.toString().padStart(2, '0');
-                secondsEl.textContent = seconds.toString().padStart(2, '0');
-
             }, 1000);
         }
 
