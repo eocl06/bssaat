@@ -13,6 +13,7 @@
             --text: #4B3832;
             --muted: #776B66;
             --accent: #E11D48;
+            --accent-rgb: 225, 29, 72; /* --accent renginin RGB karşılığı, JS ile ayarlanacak */
             --accent-bg: #FDECF0;
             --highlight-gold: #B08D57;
             --font: 'Roboto', sans-serif;
@@ -45,14 +46,75 @@
             width: 0;
             background: linear-gradient(to right, var(--love-light), var(--accent));
             border-radius: 2px;
-            box-shadow: 0 0 6px rgba(225, 29, 72, 0.3);
+            box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.3);
             z-index: 1001;
             transition: width 0.25s ease-out;
         }
 
+        .valentine-countdown {
+            background-color: var(--accent-bg);
+            padding: 25px 15px;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 2px 10px rgba(198, 160, 170, 0.1);
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-title {
+            font-family: var(--font-headings);
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .countdown-box {
+            background-color: #ffffff;
+            border: 1px solid var(--love-light);
+            border-radius: 12px;
+            padding: 12px 18px;
+            min-width: 75px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 6px rgba(var(--accent-rgb), 0.08);
+            transition: transform 0.2s ease-out;
+        }
+        .countdown-box:hover {
+            transform: translateY(-3px);
+        }
+
+        .countdown-box .countdown-number {
+            font-family: var(--font-headings);
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .countdown-box .countdown-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-family: var(--font);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+
         .container {
             max-width: 720px;
-            margin: 40px auto;
+            margin: 40px auto; /* .valentine-countdown ile olan marj ayarlandı */
             padding: 25px 30px 40px;
             background: #fff;
             border-radius: 20px;
@@ -125,10 +187,10 @@
 
         .carousel-container {
             margin: 40px 0;
-            padding: 12px 0 50px; /* Alt padding noktalar için artırıldı */
+            padding: 12px 0 50px;
             background-color: var(--accent-bg);
             border-radius: 16px;
-            position: relative; /* Noktaların mutlak konumlandırılması için */
+            position: relative;
         }
 
         .carousel-title {
@@ -152,7 +214,7 @@
 
         .carousel {
             position: relative;
-            overflow: hidden; /* Slide'ların taşmasını engellemek için bu kalmalı */
+            overflow: hidden;
             border-radius: var(--carousel-radius);
             -webkit-tap-highlight-color: transparent;
         }
@@ -209,12 +271,12 @@
 
         .carousel-dots {
             position: absolute;
-            bottom: 15px; /* .carousel-container'ın alt padding alanına göre konumlandı */
+            bottom: 15px;
             left: 0;
             right: 0;
             text-align: center;
             z-index: 2;
-            padding: 5px 0; /* Noktaların kendi içindeki dikey boşluğu */
+            padding: 5px 0;
         }
 
         .carousel-dot {
@@ -285,7 +347,7 @@
             font-size: 1.1rem;
             font-weight: 500;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);
+            box-shadow: 0 4px 10px rgba(var(--accent-rgb), 0.2);
         }
 
         .integrated-cta-section .button:hover {
@@ -307,12 +369,25 @@
         }
 
         @media (max-width: 768px) {
+            .countdown-title { font-size: 1.2rem; margin-bottom: 18px; }
+            .countdown-boxes { gap: 10px; }
+            .countdown-box { min-width: 70px; padding: 10px 15px; border-radius: 10px; }
+            .countdown-box .countdown-number { font-size: 1.8rem; }
+            .countdown-box .countdown-label { font-size: 0.65rem; }
+
             h1 { font-size: 2.4rem; }
             h2 { font-size: 1.6rem; }
             .container { padding: 20px 20px 30px; }
             .product-image { max-width: 85%; max-height: 280px;}
         }
         @media (max-width: 480px) {
+            .valentine-countdown { padding: 20px 10px; }
+            .countdown-title { font-size: 1.1rem; margin-bottom: 15px; }
+            .countdown-boxes { gap: 8px; }
+            .countdown-box { min-width: calc(50% - 12px); max-width: 70px; padding: 8px 10px; border-radius: 8px; }
+            .countdown-box .countdown-number { font-size: 1.6rem; }
+            .countdown-box .countdown-label { font-size: 0.6rem; margin-top: 3px;}
+
             .product-image { max-width: 90%; max-height: 240px;}
             h1 { font-size: 2.2rem; }
             .cta-final-text { font-size: 1.1rem;}
@@ -322,6 +397,8 @@
 </head>
 <body>
     <div class="progress-bar" id="progressBar"></div>
+    <div id="valentineCountdownContainer" class="valentine-countdown">
+        </div>
     <div class="container">
         <div class="brand-logo-container">
             <img src="https://static.bundle.app/studio/06bd8f0a-8631-4843-8d52-07c1c435f225/4da67fd8-9822-435c-82c5-7f9511aeca00.png" alt="Saat&Saat Logosu">
@@ -380,7 +457,8 @@
                     </div>
                 </div>
             </div>
-            <div class="carousel-dots"></div> </div>
+            <div class="carousel-dots"></div>
+        </div>
 
         <div class="paragraph-primary">
             <p>Sevginizi en şık şekilde ifade etmek için <strong>Versace</strong>'nin cüretkar tasarımlarından, <strong>Guess</strong>'in romantik parıltısına, <strong>Welder</strong>'in değişken ruhundan <strong>Lacoste</strong>'un sportif şıklığına kadar dünyaca ünlü markaların en seçkin modellerini bir araya getirdik. Her bir saat, sevginizin zamansızlığını ve değerini simgelemek üzere özenle seçildi.</p>
@@ -409,12 +487,11 @@
 
         // CAROUSEL SCRIPT
         function initializeCarousel(carouselId) {
-            const carouselEl = document.getElementById(carouselId); // .carousel div'i
+            const carouselEl = document.getElementById(carouselId);
             if (!carouselEl) return;
 
             const inner = carouselEl.querySelector('.carousel-inner');
             const slides = Array.from(carouselEl.querySelectorAll('.carousel-slide'));
-            // .carousel-dots artık .carouselEl'in ebeveyninin (.carousel-container) bir çocuğu
             const dotsContainer = carouselEl.parentNode.querySelector('.carousel-dots'); 
 
             if (!dotsContainer) {
@@ -525,31 +602,72 @@
             } else {
                 setPositionByIndex();
             }
-            updateDots(); // updateDots'u ilk yüklemede de çağır
+            updateDots();
+        }
+
+        // VALENTINE COUNTDOWN SCRIPT
+        function startValentineCountdown() {
+            const countdownElement = document.getElementById("valentineCountdownContainer");
+            if (!countdownElement) return;
+
+            const targetDate = new Date("2026-02-14T00:00:00").getTime();
+
+            const interval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownElement.innerHTML = `<div class="countdown-title">Mutlu Sevgililer Günü! ❤️</div>`;
+                    countdownElement.style.paddingBottom = "20px"; 
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML =
+                    `<div class="countdown-title">Sevgililer Günü'ne:</div>` +
+                    `<div class="countdown-boxes">` +
+                        `<div class="countdown-box">` +
+                            `<span class="countdown-number">${days}</span>` +
+                            `<small class="countdown-label">Gün</small>` +
+                        `</div>` +
+                        `<div class="countdown-box">` +
+                            `<span class="countdown-number">${hours}</span>` +
+                            `<small class="countdown-label">Saat</small>` +
+                        `</div>` +
+                        `<div class="countdown-box">` +
+                            `<span class="countdown-number">${minutes}</span>` +
+                            `<small class="countdown-label">Dakika</small>` +
+                        `</div>` +
+                        `<div class="countdown-box">` +
+                            `<span class="countdown-number">${seconds}</span>` +
+                            `<small class="countdown-label">Saniye</small>` +
+                        `</div>` +
+                    `</div>`;
+
+            }, 1000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initializeCarousel('productCarousel');
-            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-            if (accentColor) {
+            // Accent renginin RGB değerlerini CSS değişkeni olarak ayarla
+            const accentColorValue = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+            if (accentColorValue) {
                 let r=0, g=0, b=0;
-                if (accentColor.startsWith('#')) {
-                    const hex = accentColor.substring(1);
+                if (accentColorValue.startsWith('#')) {
+                    const hex = accentColorValue.substring(1);
                     if (hex.length === 3) {
-                        r = parseInt(hex[0] + hex[0], 16);
-                        g = parseInt(hex[1] + hex[1], 16);
-                        b = parseInt(hex[2] + hex[2], 16);
+                        r = parseInt(hex[0] + hex[0], 16); g = parseInt(hex[1] + hex[1], 16); b = parseInt(hex[2] + hex[2], 16);
                     } else if (hex.length === 6) {
-                        r = parseInt(hex.substring(0, 2), 16);
-                        g = parseInt(hex.substring(2, 4), 16);
-                        b = parseInt(hex.substring(4, 6), 16);
+                        r = parseInt(hex.substring(0, 2), 16); g = parseInt(hex.substring(2, 4), 16); b = parseInt(hex.substring(4, 6), 16);
                     }
-                } else if (accentColor.startsWith('rgb')) { 
-                    const parts = accentColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+                } else if (accentColorValue.startsWith('rgb')) { 
+                    const parts = accentColorValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
                     if (parts && parts.length >= 4) {
-                        r = parseInt(parts[1]);
-                        g = parseInt(parts[2]);
-                        b = parseInt(parts[3]);
+                        r = parseInt(parts[1]); g = parseInt(parts[2]); b = parseInt(parts[3]);
                     }
                 }
                 if (r || g || b ) { 
@@ -560,6 +678,9 @@
             } else { 
                 document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
             }
+            
+            initializeCarousel('productCarousel');
+            startValentineCountdown(); // Geri sayımı başlat
         });
 </script>
 </body>
