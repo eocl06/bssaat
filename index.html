@@ -255,14 +255,15 @@
 
         /* Carousel Noktaları */
         .carousel-dots {
-            position: absolute; /* Carousel-inner'a göre konumlanacak */
-            bottom: -16px; /* Carousel'in altına */
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 2;
-            padding: 5px 0;
-        }
+    position: absolute; /* Carousel-inner'a göre konumlanacak */
+    bottom: -16px; /* Mevcut değer */
+    bottom: -25px; /* Daha fazla boşluk için bu veya daha büyük bir değer deneyin */
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 2;
+    padding: 5px 0;
+}
 
         .carousel-dot {
             display: inline-block;
