@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saat&Saat - Aşkla Güzelleşen Saatler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet"> <style>
+        :root {
+            --bg: #FFF8F8; /* Çok açık pembe arka plan */
+            --text: #4B3832; /* Koyu kahvemsi metin */
+            --muted: #776B66; /* Daha yumuşak metin */
+            --accent: #E11D48; /* Canlı romantik pembe/kırmızı */
+            --accent-bg: #FDECF0; /* Açık pembe vurgu arka planı */
+            --highlight-gold: #B08D57; /* Zarif altın vurgu */
+            --font: 'Roboto', sans-serif;
+            --font-headings: 'Playfair Display', serif;
+            --font-special: 'Dancing Script', cursive; /* Özel başlıklar için */
+            --carousel-radius: 12px;
+            --card-shadow: 0 6px 20px rgba(198, 160, 170, 0.15); /* Yumuşak pembe tonlu gölge */
+            --love-light: #FFB6C1; /* Açık pembe ışık */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 1.05rem;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            background: linear-gradient(to right, var(--love-light), var(--accent));
+            border-radius: 2px;
+            box-shadow: 0 0 6px rgba(225, 29, 72, 0.3);
+            z-index: 1001;
+            transition: width 0.25s ease-out;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 40px auto;
+            padding: 25px 30px 40px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(198, 160, 170, 0.2);
+            position: relative;
+            overflow: hidden; /* İçerideki ::before için */
+        }
+
+        .container::before { /* Hafif bir Sevgililer Günü dokunuşu */
+            content: "❤️";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            color: var(--accent);
+            opacity: 0.08;
+            transform: rotate(20deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+
+        .brand-logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: -35px;
+        }
+
+        .brand-logo-container img {
+            max-height: 140px; /* Logonuzun boyutuna göre ayarlayın */
+            width: auto;
+        }
+
+        h1, h2 {
+            color: var(--text);
+            font-family: var(--font-headings);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8rem; /* Biraz daha büyük */
+            color: var(--accent);
+            font-family: var(--font-special); /* Özel Sevgililer Günü yazı tipi */
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            margin-top: 40px;
+            color: #5C3D3D;
+        }
+
+        p {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
+
+        .article-meta {
+            font-size: 0.9rem;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* CAROUSEL STYLES */
+        .carousel-container {
+            margin: 40px 0;
+            padding: 25px 0;
+            background-color: var(--accent-bg);
+            border-radius: 16px;
+        }
+
+        .carousel-title {
+            font-size: 1.6rem;
+            font-family: var(--font-headings);
+            color: var(--accent);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+        .carousel-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+            opacity: 0.7;
+            margin: 8px auto 0 auto;
+            border-radius: 1px;
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--carousel-radius);
+            -webkit-tap-highlight-color: transparent; /* Mobil dokunma vurgusunu kaldır */
+        }
+
+        .carousel-inner {
+            display: flex;
+            user-select: none; /* Metin seçmeyi engelle */
+            cursor: grab; /* Sürükleme imleci */
+            transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .carousel-inner.is-dragging {
+            cursor: grabbing;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            padding: 15px; /* Daha büyük görseller için padding azaltıldı */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .carousel-slide:hover {
+            transform: translateY(-5px); /* Ürün üzerine gelince hafif yukarı kalkma efekti */
+        }
+
+        .product-image {
+            max-width: 95%; /* Görselin genişliğini artırdık */
+            height: auto;
+            max-height: 330px; /* Görselin maksimum yüksekliğini artırdık */
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px; /* Alt boşluğu biraz azalttık */
+            box-shadow: var(--card-shadow);
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-family: var(--font-headings);
+            color: var(--text);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 10px;
+            min-height: 40px; /* Açıklama alanı için sabit yükseklik */
+        }
+
+        /* Carousel Kontrolleri (Oklar) */
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 15px; /* Oklar için kenarlardan boşluk */
+            pointer-events: none; /* Oklar sadece görünecek, altındaki slide swipe edilebilir olacak */
+            z-index: 3;
+            opacity: 0; /* Başlangıçta gizli */
+            transition: opacity 0.3s ease-in-out;
+        }
+        .carousel:hover .carousel-controls { /* Fare üzerine gelince okları göster */
+           opacity: 1;
+        }
+        /* Dokunmatik cihazlarda okları her zaman görünür yap */
+        .carousel-controls.mobile-visible {
+            opacity: 1;
+            pointer-events: auto; /* Dokunmatikte tıklanabilir yap */
+        }
+        .carousel-controls.mobile-visible button {
+            pointer-events: all;
+        }
+
+        .carousel-controls button {
+            pointer-events: all; /* Ok butonları tıklanabilir olsun */
+            background: rgba(var(--accent-rgb, 225, 29, 72), 0.5); /* Ana accent renginin yarı saydam hali */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .carousel-controls button:hover {
+            background: rgba(var(--accent-rgb, 225, 29, 72), 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Carousel Noktaları */
+        .carousel-dots {
+            position: absolute; /* Carousel-inner'a göre konumlanacak */
+            bottom: 10px; /* Carousel'in altına */
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 2;
+            padding: 5px 0;
+        }
+
+        .carousel-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--love-light); /* Daha yumuşak bir renk */
+            margin: 0 5px;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .carousel-dot:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        .carousel-dot.active {
+            background-color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Paragraf Stilleri */
+        .paragraph-primary {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .paragraph-primary p {
+            padding: 5px 0;
+        }
+        .paragraph-primary p strong { /* Yazı içindeki vurgular */
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .integrated-cta-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 35px 20px;
+            background-color: var(--accent-bg);
+            border-radius: 12px;
+            border-top: 3px solid var(--accent);
+            box-shadow: var(--card-shadow);
+        }
+
+        .cta-final-text {
+            font-size: 1.2rem;
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            font-family: var(--font-headings);
+        }
+
+        .cta-final-text strong {
+            color: var(--accent);
+            font-family: var(--font-special);
+            font-size: 1.5rem;
+        }
+
+        .integrated-cta-section .button {
+            display: inline-block;
+            padding: 14px 35px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);
+        }
+
+        .integrated-cta-section .button:hover {
+            background-color: #c7153f; /* Accent renginin biraz koyusu */
+            transform: translateY(-3px) scale(1.03);
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 40px;
+        }
+        .footer-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+         @media (max-width: 768px) {
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.6rem; }
+            .container { padding: 20px 20px 30px; }
+            .product-image { max-width: 85%; max-height: 280px;} /* Mobil için de ayarlandı */
+            .carousel-controls { padding: 0 5px; }
+            .carousel-controls button { width: 36px; height: 36px; font-size: 1.1rem; }
+        }
+         @media (max-width: 480px) { /* Daha küçük ekranlar için ek ayar */
+            .product-image { max-width: 90%; max-height: 240px;}
+            h1 { font-size: 2.2rem; }
+            .cta-final-text { font-size: 1.1rem;}
+            .integrated-cta-section .button { font-size: 1rem; padding: 12px 30px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="container">
+        <div class="brand-logo-container">
+            <img src="https://static.bundle.app/studio/06bd8f0a-8631-4843-8d52-07c1c435f225/4da67fd8-9822-435c-82c5-7f9511aeca00.png" alt="Saat&Saat Logosu">
+        </div>
+
+        <h1>Aşkla Güzelleşen Saatler</h1>
+        <p class="article-meta">Saat&Saat Özel Sevgililer Günü Koleksiyonu</p>
+
+        <div class="paragraph-primary">
+            <p>Bu Sevgililer Günü'nde, <strong>aşkınız kadar özel</strong> ve <strong>zaman kadar değerli</strong> bir hediye ile sevdiğinizi şımartın. Her bakışta en güzel anlarınızı hatırlatacak, zarafet ve tutkuyla tasarlanmış “Aşkla Güzelleşen Saatler” koleksiyonumuz, Saat&Saat mağazalarında ve online platformumuzda sizleri bekliyor.</p>
+        </div>
+
+        <div class="carousel-container">
+            <h2 class="carousel-title">Sevgililer Günü Işıltısı</h2>
+            <div class="carousel" id="productCarousel">
+                <div class="carousel-inner">
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/00c10074-d2e6-42bd-a14b-a0d9488e56b1.png" alt="Versace Dominus Skeleton" class="product-image">
+                        <p class="product-name">Versace Dominus Skeleton</p>
+                        <p class="product-description">İsviçre yapımı otomatik skeleton mekanizmasıyla aşkınız kadar benzersiz.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/c76dd347-b95c-468d-b54f-a668d5d29eda.png" alt="Universe Constant Supernova Ladies" class="product-image">
+                        <p class="product-name">Universe Constant Supernova</p>
+                        <p class="product-description">Pırlanta detaylı yeşil kadranıyla göz kamaştıran zarafet.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/88c49904-ac4d-4c8c-b48e-89646ec1508e.png" alt="Guess Mini Luna" class="product-image">
+                        <p class="product-name">Guess Mini Luna</p>
+                        <p class="product-description">Pudra pembesi kadranı ve ışıltılı taşlarıyla romantik bir dokunuş.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/df589945-8291-4a38-baeb-600a4bc9f85e.png" alt="Welder Moody" class="product-image">
+                        <p class="product-name">Welder Moody</p>
+                        <p class="product-description">Photochromic camıyla her an farklı bir ışıltı, altın rengi hasır bilezik.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/87c7644d-116b-43c8-b934-b8eb770e920b.png" alt="Boss BOSSMATIC" class="product-image">
+                        <p class="product-name">Boss BOSSMATIC</p>
+                        <p class="product-description">Modern erkeğin stiline yeşil, dokulu kadranıyla zarif bir imza.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/8b761908-84cc-4eda-99e5-9afcc2fe7926.png" alt="Jacques Philippe Adastra" class="product-image">
+                        <p class="product-name">Jacques Philippe Adastra</p>
+                        <p class="product-description">Yeşil kadran şıklığı ve tırtıklı bezeliyle aşkınızı taçlandırın.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/422d67bd-5b8c-4b19-9a94-538f38acab4e.png" alt="Lacoste Sevgililer Günü" class="product-image">
+                        <p class="product-name">Lacoste Love Edition</p>
+                        <p class="product-description">İkonik yeşil deri kayış ve taşlarla süslenmiş kadranıyla aşk dolu.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/707922a8-f860-4f76-96ea-cc35cbdb62de.png" alt="U.S. Polo Assn. Kadın Saati" class="product-image">
+                        <p class="product-name">U.S. Polo Assn. Elegance</p>
+                        <p class="product-description">Metalik gri rengi ve gümüş tonundaki kadranıyla modern zarafet.</p>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="prev" aria-label="Önceki Saat">‹</button> <button class="next" aria-label="Sonraki Saat">›</button>
+                </div>
+                <div class="carousel-dots"></div>
+            </div>
+        </div>
+
+        <div class="paragraph-primary">
+            <p>Sevginizi en şık şekilde ifade etmek için <strong>Versace</strong>'nin cüretkar tasarımlarından, <strong>Guess</strong>'in romantik parıltısına, <strong>Welder</strong>'in değişken ruhundan <strong>Lacoste</strong>'un sportif şıklığına kadar dünyaca ünlü markaların en seçkin modellerini bir araya getirdik. Her bir saat, sevginizin zamansızlığını ve değerini simgelemek üzere özenle seçildi.</p>
+            <p>Unutmayın, en güzel hediye <strong>birlikte geçirilen anlardır</strong>; ancak şık bir saat, bu anları ölümsüzleştirmenin en zarif yoludur.</p>
+        </div>
+
+        <div class="integrated-cta-section">
+            <p class="cta-final-text"><strong>Aşkınızın Ritmini</strong> Yakalayın! <br>Sevgililer Günü için mükemmel hediyeyi keşfedin.</p>
+            <a class="button" href="[SAAT_VE_SAAT_SEVGILILER_GUNU_KOLEKSIYON_URL_BURAYA]" target="_blank">Koleksiyona Göz Atın</a>
+        </div>
+
+        <p class="footer-note">Tüm saat modelleri Saat&Saat güvencesiyle sunulmaktadır. <br>Detaylı bilgi ve diğer modeller için <a href="[SAAT_VE_SAAT_ANA_SAYFA_URL_BURAYA]" target="_blank">web sitemizi</a> ziyaret edebilirsiniz.</p>
+    </div>
+
+    <script>
+        // Progress Bar Script
+        const progressBar = document.getElementById('progressBar');
+        if (progressBar) {
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = `${scrollPercent}%`;
+            });
+        }
+
+        // CAROUSEL SCRIPT
+        function initializeCarousel(carouselId) {
+            const carousel = document.getElementById(carouselId);
+            if (!carousel) return;
+
+            const inner = carousel.querySelector('.carousel-inner');
+            const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+            const prevButton = carousel.querySelector('.prev');
+            const nextButton = carousel.querySelector('.next');
+            const dotsContainer = carousel.querySelector('.carousel-dots');
+            const carouselControls = carousel.querySelector('.carousel-controls');
+
+            if (slides.length === 0) return;
+
+            let currentIndex = 0;
+            let isDragging = false;
+            let startPos = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+            
+            // slideWidth fonksiyonunu, her çağrıldığında güncel genişliği alacak şekilde düzeltiyoruz.
+            const slideWidth = () => slides.length > 0 ? slides[0].offsetWidth : 0; 
+
+            function updateDots() {
+                if (!dotsContainer) return;
+                dotsContainer.innerHTML = '';
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.classList.add('carousel-dot');
+                    if (i === currentIndex) {
+                        dot.classList.add('active');
+                    }
+                    dot.setAttribute('aria-label', `${i + 1}. slayda git`);
+                    dot.addEventListener('click', () => goToSlide(i));
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            function setPositionByIndex() {
+                if(slideWidth() === 0 && slides.length > 0) { // Eğer ilk başta genişlik 0 ise kısa bir gecikmeyle tekrar dene
+                    setTimeout(setPositionByIndex, 100);
+                    return;
+                }
+                currentTranslate = currentIndex * -slideWidth();
+                prevTranslate = currentTranslate;
+                inner.style.transform = `translateX(${currentTranslate}px)`;
+            }
+            
+            function animation() { // Bu fonksiyon sürükleme sırasında kullanılmıyor, kaldırılabilir veya farklı bir amaç için tutulabilir.
+                inner.style.transform = `translateX(${currentTranslate}px)`;
+                // if (isDragging) requestAnimationFrame(animation); // Bu satır sürükleme için gereksiz.
+            }
+
+            function dragStart(event) {
+                // Sadece tek dokunma/fare ile sürüklemeyi etkinleştir
+                if (event.type.includes('touch') && event.touches.length > 1) return;
+
+                isDragging = true;
+                startPos = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+                inner.style.transition = 'none'; // Sürüklerken animasyonu kaldır
+                inner.classList.add('is-dragging');
+            }
+
+            function drag(event) {
+                if (isDragging) {
+                    // Sadece tek dokunma/fare ile sürüklemeyi etkinleştir
+                    if (event.type.includes('touch') && event.touches.length > 1) {
+                        dragEnd(); // Çoklu dokunmada sürüklemeyi bitir
+                        return;
+                    }
+                    const currentPosition = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+                    currentTranslate = prevTranslate + currentPosition - startPos;
+                    inner.style.transform = `translateX(${currentTranslate}px)`;
+                }
+            }
+
+            function dragEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                inner.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)'; // Animasyonu geri ekle
+                inner.classList.remove('is-dragging');
+
+                const movedBy = currentTranslate - prevTranslate;
+                // Sürükleme mesafesine göre slayt değiştirme eşiği (slide genişliğinin bir kısmı)
+                const threshold = slideWidth() / 4; 
+
+                if (movedBy < -threshold && currentIndex < slides.length - 1) {
+                    currentIndex++;
+                } else if (movedBy > threshold && currentIndex > 0) {
+                    currentIndex--;
+                }
+                
+                setPositionByIndex();
+                updateDots();
+            }
+            
+            function goToSlide(index) {
+                currentIndex = index;
+                setPositionByIndex();
+                updateDots();
+            }
+
+            if (prevButton && nextButton) {
+                prevButton.addEventListener('click', () => {
+                    if (currentIndex > 0) currentIndex--;
+                    else currentIndex = slides.length -1; // Başa dön
+                    setPositionByIndex();
+                    updateDots();
+                });
+                nextButton.addEventListener('click', () => {
+                    if (currentIndex < slides.length - 1) currentIndex++;
+                    else currentIndex = 0; // Sona dön
+                    setPositionByIndex();
+                    updateDots();
+                });
+            }
+            
+            // Touch & Mouse Events
+            inner.addEventListener('mousedown', dragStart);
+            inner.addEventListener('touchstart', dragStart, { passive: true });
+
+            document.addEventListener('mousemove', drag); // document üzerinde dinle
+            document.addEventListener('touchmove', drag, { passive: true }); // document üzerinde dinle
+
+            document.addEventListener('mouseup', dragEnd); // document üzerinde dinle
+            document.addEventListener('touchend', dragEnd); // document üzerinde dinle
+            document.addEventListener('touchcancel', dragEnd);
+
+
+            // Dokunmatik cihazlarda kontrol oklarını görünür yap
+            const isTouchDevice = () => ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+            if (isTouchDevice() && carouselControls) {
+                carouselControls.classList.add('mobile-visible');
+            }
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                     // slideWidth() çağrısı zaten güncel genişliği alacak.
+                    setPositionByIndex(); // Yeniden boyutlandırmada konumu güncelle
+                }, 250);
+            });
+
+            // İlk yüklemede ve resimler yüklendikten sonra pozisyonu ayarla
+            // Eğer sayfa çok hızlı yüklenirse slideWidth 0 olabilir.
+            if (slideWidth() === 0 && slides.length > 0) {
+                 setTimeout(setPositionByIndex, 100); // Kısa bir gecikme ile tekrar dene
+            } else {
+                setPositionByIndex();
+            }
+            updateDots();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCarousel('productCarousel');
+            // Accent renginin RGB değerlerini CSS değişkeni olarak ayarla (Okların yarı saydam arka planı için)
+            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+            if (accentColor) {
+                let r=0, g=0, b=0;
+                if (accentColor.startsWith('#')) {
+                    const hex = accentColor.substring(1);
+                    if (hex.length === 3) {
+                        r = parseInt(hex[0] + hex[0], 16);
+                        g = parseInt(hex[1] + hex[1], 16);
+                        b = parseInt(hex[2] + hex[2], 16);
+                    } else if (hex.length === 6) {
+                        r = parseInt(hex.substring(0, 2), 16);
+                        g = parseInt(hex.substring(2, 4), 16);
+                        b = parseInt(hex.substring(4, 6), 16);
+                    }
+                } else if (accentColor.startsWith('rgb')) { // rgb veya rgba formatını da yakala
+                    const parts = accentColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+                    if (parts && parts.length >= 4) {
+                        r = parseInt(parts[1]);
+                        g = parseInt(parts[2]);
+                        b = parseInt(parts[3]);
+                    }
+                }
+                if (r || g || b ) { // Eğer renk parse edilebildiyse
+                   document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`);
+                } else { // Varsayılan bir RGB ayarla eğer parse edilemezse
+                    document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); // Varsayılan accent RGB
+                }
+            } else { // Accent rengi tanımlı değilse varsayılan bir RGB ayarla
+                 document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
+            }
+        });
+    </script>
+</body>
+</html>
