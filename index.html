@@ -13,7 +13,7 @@
             --text: #4B3832;
             --muted: #776B66;
             --accent: #E11D48;
-            --accent-rgb: 225, 29, 72; /* --accent renginin RGB karşılığı, JS ile ayarlanacak */
+            --accent-rgb: 225, 29, 72;
             --accent-bg: #FDECF0;
             --highlight-gold: #B08D57;
             --font: 'Roboto', sans-serif;
@@ -73,7 +73,7 @@
         .countdown-boxes {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Büyük ekranlarda da gerekirse sarabilir ama genelde 4'ü sığar */
             gap: 12px;
         }
 
@@ -114,7 +114,7 @@
 
         .container {
             max-width: 720px;
-            margin: 40px auto; /* .valentine-countdown ile olan marj ayarlandı */
+            margin: 0 auto 40px auto; /* Üst marj valentine-countdown'dan geldiği için 0 yapıldı */
             padding: 25px 30px 40px;
             background: #fff;
             border-radius: 20px;
@@ -377,16 +377,43 @@
 
             h1 { font-size: 2.4rem; }
             h2 { font-size: 1.6rem; }
-            .container { padding: 20px 20px 30px; }
+            .container { padding: 20px 20px 30px; margin-top: 0; /* Reset top margin if countdown already provides it */}
             .product-image { max-width: 85%; max-height: 280px;}
         }
         @media (max-width: 480px) {
-            .valentine-countdown { padding: 20px 10px; }
-            .countdown-title { font-size: 1.1rem; margin-bottom: 15px; }
-            .countdown-boxes { gap: 8px; }
-            .countdown-box { min-width: calc(50% - 12px); max-width: 70px; padding: 8px 10px; border-radius: 8px; }
-            .countdown-box .countdown-number { font-size: 1.6rem; }
-            .countdown-box .countdown-label { font-size: 0.6rem; margin-top: 3px;}
+            .valentine-countdown {
+                padding: 15px 5px;
+            }
+            .countdown-title {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+            .countdown-boxes {
+                display: flex;
+                justify-content: center; 
+                flex-wrap: nowrap; /* KESİNLİKLE alt satıra sarmasın */
+                gap: 4px;
+                width: 100%;
+                /* overflow-x: auto; /* Gerekirse açılır, ama kutu boyutları ile sığdırmaya çalışın */
+            }
+            .countdown-box {
+                min-width: 55px;
+                flex-grow: 1;   
+                flex-shrink: 1; 
+                flex-basis: 0;  
+                padding: 6px 4px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            .countdown-box .countdown-number {
+                font-size: 1.2rem;
+                margin-bottom: 2px;
+            }
+            .countdown-box .countdown-label {
+                font-size: 0.55rem;
+                white-space: nowrap;
+                margin-top: 1px;
+            }
 
             .product-image { max-width: 90%; max-height: 240px;}
             h1 { font-size: 2.2rem; }
@@ -401,7 +428,7 @@
         </div>
     <div class="container">
         <div class="brand-logo-container">
-            <img src="https://static.bundle.app/studio/06bd8f0a-8631-4843-8d52-07c1c435f225/4da67fd8-9822-435c-82c5-7f9511aeca00.png" alt="Saat&Saat Logosu">
+            <img src="https://static.bundle.app/studio/06bd8f0a-8631-4843-8d52-07c1c435f225/4da67fd8-9822-435c-82c5-7f9511aeca00.png" alt="Saat&Saat Logosu" loading="lazy">
         </div>
 
         <h1>Aşkla Güzelleşen Saatler</h1>
@@ -416,42 +443,42 @@
             <div class="carousel" id="productCarousel">
                 <div class="carousel-inner">
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/00c10074-d2e6-42bd-a14b-a0d9488e56b1.png" alt="Versace Dominus Skeleton" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/00c10074-d2e6-42bd-a14b-a0d9488e56b1.png" alt="Versace Dominus Skeleton" class="product-image" loading="lazy">
                         <p class="product-name">Versace Dominus Skeleton</p>
                         <p class="product-description">İsviçre yapımı otomatik skeleton mekanizmasıyla aşkınız kadar benzersiz.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/c76dd347-b95c-468d-b54f-a668d5d29eda.png" alt="Universe Constant Supernova Ladies" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/c76dd347-b95c-468d-b54f-a668d5d29eda.png" alt="Universe Constant Supernova Ladies" class="product-image" loading="lazy">
                         <p class="product-name">Universe Constant Supernova</p>
                         <p class="product-description">Pırlanta detaylı yeşil kadranıyla göz kamaştıran zarafet.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/88c49904-ac4d-4c8c-b48e-89646ec1508e.png" alt="Guess Mini Luna" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/88c49904-ac4d-4c8c-b48e-89646ec1508e.png" alt="Guess Mini Luna" class="product-image" loading="lazy">
                         <p class="product-name">Guess Mini Luna</p>
                         <p class="product-description">Pudra pembesi kadranı ve ışıltılı taşlarıyla romantik bir dokunuş.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/df589945-8291-4a38-baeb-600a4bc9f85e.png" alt="Welder Moody" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/df589945-8291-4a38-baeb-600a4bc9f85e.png" alt="Welder Moody" class="product-image" loading="lazy">
                         <p class="product-name">Welder Moody</p>
                         <p class="product-description">Photochromic camıyla her an farklı bir ışıltı, altın rengi hasır bilezik.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/87c7644d-116b-43c8-b934-b8eb770e920b.png" alt="Boss BOSSMATIC" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/87c7644d-116b-43c8-b934-b8eb770e920b.png" alt="Boss BOSSMATIC" class="product-image" loading="lazy">
                         <p class="product-name">Boss BOSSMATIC</p>
                         <p class="product-description">Modern erkeğin stiline yeşil, dokulu kadranıyla zarif bir imza.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/8b761908-84cc-4eda-99e5-9afcc2fe7926.png" alt="Jacques Philippe Adastra" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/8b761908-84cc-4eda-99e5-9afcc2fe7926.png" alt="Jacques Philippe Adastra" class="product-image" loading="lazy">
                         <p class="product-name">Jacques Philippe Adastra</p>
                         <p class="product-description">Yeşil kadran şıklığı ve tırtıklı bezeliyle aşkınızı taçlandırın.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/422d67bd-5b8c-4b19-9a94-538f38acab4e.png" alt="Lacoste Sevgililer Günü" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/422d67bd-5b8c-4b19-9a94-538f38acab4e.png" alt="Lacoste Sevgililer Günü" class="product-image" loading="lazy">
                         <p class="product-name">Lacoste Love Edition</p>
                         <p class="product-description">İkonik yeşil deri kayış ve taşlarla süslenmiş kadranıyla aşk dolu.</p>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/707922a8-f860-4f76-96ea-cc35cbdb62de.png" alt="U.S. Polo Assn. Kadın Saati" class="product-image">
+                        <img src="https://static.bundle.app/studio/ec8dc595-0c93-4a6b-bc90-02a0ed585bc5/707922a8-f860-4f76-96ea-cc35cbdb62de.png" alt="U.S. Polo Assn. Kadın Saati" class="product-image" loading="lazy">
                         <p class="product-name">U.S. Polo Assn. Elegance</p>
                         <p class="product-description">Metalik gri rengi ve gümüş tonundaki kadranıyla modern zarafet.</p>
                     </div>
@@ -495,7 +522,7 @@
             const dotsContainer = carouselEl.parentNode.querySelector('.carousel-dots'); 
 
             if (!dotsContainer) {
-                console.error("Carousel dots container not found!");
+                // console.error("Carousel dots container not found!"); // Hata ayıklama için
                 return;
             }
             if (slides.length === 0) return;
@@ -597,12 +624,28 @@
                 }, 250);
             });
 
-            if (slideWidth() === 0 && slides.length > 0) {
-                setTimeout(setPositionByIndex, 100); 
+            // İlk yüklemede ve resimler yüklendikten sonra pozisyonu ayarla
+            // Eğer sayfa çok hızlı yüklenirse slideWidth 0 olabilir.
+            // Bu yüzden updateDots'u ve setPositionByIndex'i bir window.onload içine almak veya
+            // görsellerin yüklenmesini beklemek daha garantili olabilir.
+            // Şimdilik bu şekilde bırakıyorum, sorun olursa değerlendirilebilir.
+            if (document.readyState === "complete") {
+                 if (slideWidth() === 0 && slides.length > 0) {
+                    setTimeout(setPositionByIndex, 100); 
+                } else {
+                    setPositionByIndex();
+                }
+                updateDots();
             } else {
-                setPositionByIndex();
+                window.addEventListener('load', () => {
+                    if (slideWidth() === 0 && slides.length > 0) {
+                        setTimeout(setPositionByIndex, 100); 
+                    } else {
+                        setPositionByIndex();
+                    }
+                    updateDots();
+                });
             }
-            updateDots();
         }
 
         // VALENTINE COUNTDOWN SCRIPT
@@ -673,10 +716,11 @@
                 if (r || g || b ) { 
                     document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`);
                 } else { 
+                    // Varsayılan bir RGB ayarla eğer parse edilemezse
                     document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); 
                 }
-            } else { 
-                document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
+            } else { // Accent rengi tanımlı değilse varsayılan bir RGB ayarla
+                 document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
             }
             
             initializeCarousel('productCarousel');
