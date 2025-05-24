@@ -18,39 +18,18 @@
             --highlight-gold: #B08D57;
             --font: 'Roboto', sans-serif;
             --font-headings: 'Playfair Display', serif;
-            --font-special: 'Dancing Script', cursive;
+            --font-special: 'Dancing Script', cursive; /* Sayılar için bu fontu kullanacağız */
             --carousel-radius: 12px;
             --card-shadow: 0 6px 20px rgba(198, 160, 170, 0.15);
             --love-light: #FFB6C1;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; font-size: 1.05rem; }
 
-        body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.65;
-            font-size: 1.05rem;
-        }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; width: 0; background: linear-gradient(to right, var(--love-light), var(--accent)); border-radius: 2px; box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.3); z-index: 1001; transition: width 0.25s ease-out; }
 
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            width: 0;
-            background: linear-gradient(to right, var(--love-light), var(--accent));
-            border-radius: 2px;
-            box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.3);
-            z-index: 1001;
-            transition: width 0.25s ease-out;
-        }
-
+        /* Ana Geri Sayım Kapsayıcısı */
         .valentine-countdown {
             background-color: var(--accent-bg);
             padding: 25px 15px;
@@ -70,350 +49,113 @@
             font-weight: 700;
         }
 
-        .countdown-boxes {
+        /* Yeni Zarif Geri Sayım Stilleri */
+        .elegant-countdown-timer {
             display: flex;
+            align-items: baseline; 
             justify-content: center;
-            flex-wrap: wrap; /* Büyük ekranlarda da gerekirse sarabilir ama genelde 4'ü sığar */
-            gap: 12px;
+            gap: 8px; 
+            font-family: var(--font-headings);
+            width: 100%;
+            flex-wrap: wrap; 
         }
 
-        .countdown-box {
-            background-color: #ffffff;
-            border: 1px solid var(--love-light);
-            border-radius: 12px;
-            padding: 12px 18px;
-            min-width: 75px;
+        .time-block {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 3px 6px rgba(var(--accent-rgb), 0.08);
-            transition: transform 0.2s ease-out;
-        }
-        .countdown-box:hover {
-            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.7); 
+            border: 1px solid rgba(var(--accent-rgb), 0.2); 
+            border-radius: 8px;
+            padding: 10px 15px;
+            min-width: 70px; 
+            box-shadow: 0 2px 5px rgba(var(--accent-rgb), 0.05);
         }
 
-        .countdown-box .countdown-number {
-            font-family: var(--font-headings);
-            font-size: 2rem;
-            color: var(--accent);
+        .time-value {
+            font-size: 2.8rem; 
             font-weight: 700;
-            line-height: 1;
-            margin-bottom: 4px;
+            color: var(--accent);
+            line-height: 1.1;
+            font-family: var(--font-special); 
         }
 
-        .countdown-box .countdown-label {
-            font-size: 0.7rem;
+        .time-label {
+            font-size: 0.65rem;
             color: var(--muted);
-            font-family: var(--font);
-            font-weight: 500;
             text-transform: uppercase;
-        }
-
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto 40px auto; /* Üst marj valentine-countdown'dan geldiği için 0 yapıldı */
-            padding: 25px 30px 40px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(198, 160, 170, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: "❤️";
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 100px;
-            color: var(--accent);
-            opacity: 0.08;
-            transform: rotate(20deg);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-
-        .brand-logo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: -35px;
-        }
-
-        .brand-logo-container img {
-            max-height: 140px;
-            width: auto;
-        }
-
-        h1, h2 {
-            color: var(--text);
-            font-family: var(--font-headings);
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            color: var(--accent);
-            font-family: var(--font-special);
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 1.9rem;
-            margin-top: 40px;
-            color: #5C3D3D;
-        }
-
-        p {
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.75;
-            margin-bottom: 18px;
-        }
-
-        .article-meta {
-            font-size: 0.9rem;
-            color: var(--muted);
-            text-align: center;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        .carousel-container {
-            margin: 40px 0;
-            padding: 12px 0 50px;
-            background-color: var(--accent-bg);
-            border-radius: 16px;
-            position: relative;
-        }
-
-        .carousel-title {
-            font-size: 1.6rem;
-            font-family: var(--font-headings);
-            color: var(--accent);
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-        }
-        .carousel-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent);
-            opacity: 0.7;
-            margin: 8px auto 0 auto;
-            border-radius: 1px;
-        }
-
-        .carousel {
-            position: relative;
-            overflow: hidden;
-            border-radius: var(--carousel-radius);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .carousel-inner {
-            display: flex;
-            user-select: none;
-            cursor: grab;
-            transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        .carousel-inner.is-dragging {
-            cursor: grabbing;
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            padding: 15px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .carousel-slide:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-image {
-            max-width: 95%;
-            height: auto;
-            max-height: 330px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .product-name {
-            font-weight: 700;
-            font-family: var(--font-headings);
-            color: var(--text);
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .product-description {
-            font-size: 0.9rem;
-            color: var(--muted);
-            text-align: center;
-            margin-bottom: 10px;
-            min-height: 40px;
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 2;
-            padding: 5px 0;
-        }
-
-        .carousel-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: var(--love-light);
-            margin: 0 5px;
-            cursor: pointer;
-            border: none;
-            padding: 0;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .carousel-dot:hover {
-            background-color: var(--accent);
-            transform: scale(1.1);
-        }
-        .carousel-dot.active {
-            background-color: var(--accent);
-            transform: scale(1.2);
-        }
-
-        .paragraph-primary {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .paragraph-primary p {
-            padding: 5px 0;
-        }
-        .paragraph-primary p strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .integrated-cta-section {
-            text-align: center;
-            margin-top: 50px;
-            padding: 35px 20px;
-            background-color: var(--accent-bg);
-            border-radius: 12px;
-            border-top: 3px solid var(--accent);
-            box-shadow: var(--card-shadow);
-        }
-
-        .cta-final-text {
-            font-size: 1.2rem;
-            color: var(--text);
-            line-height: 1.8;
-            margin-bottom: 30px;
-            padding: 0 20px;
-            font-family: var(--font-headings);
-        }
-
-        .cta-final-text strong {
-            color: var(--accent);
-            font-family: var(--font-special);
-            font-size: 1.5rem;
-        }
-
-        .integrated-cta-section .button {
-            display: inline-block;
-            padding: 14px 35px;
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            margin-top: 4px;
             font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(var(--accent-rgb), 0.2);
+            letter-spacing: 0.5px;
         }
 
-        .integrated-cta-section .button:hover {
-            background-color: #c7153f;
-            transform: translateY(-3px) scale(1.03);
-        }
-        .footer-note {
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 40px;
-        }
-        .footer-note a {
+        .time-separator {
+            font-size: 2.2rem; 
             color: var(--accent);
-            text-decoration: none;
+            font-weight: 700;
+            padding: 0 2px; 
+            align-self: center; 
+            line-height: 1; 
         }
-        .footer-note a:hover {
-            text-decoration: underline;
-        }
+        /* ... (diğer CSS stilleriniz olduğu gibi kalacak) ... */
+        .container { max-width: 720px; margin: 0 auto 40px auto; padding: 25px 30px 40px; background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(198, 160, 170, 0.2); position: relative; overflow: hidden; }
+        .container::before { content: "❤️"; position: absolute; top: -20px; right: -20px; font-size: 100px; color: var(--accent); opacity: 0.08; transform: rotate(20deg); z-index: 0; pointer-events: none; }
+        .brand-logo-container { display: flex; justify-content: center; margin-bottom: -35px; }
+        .brand-logo-container img { max-height: 140px; width: auto; }
+        h1, h2 { color: var(--text); font-family: var(--font-headings); font-weight: 700; line-height: 1.3; margin-bottom: 20px; text-align: center; }
+        h1 { font-size: 2.8rem; color: var(--accent); font-family: var(--font-special); margin-bottom: 10px; }
+        h2 { font-size: 1.9rem; margin-top: 40px; color: #5C3D3D; }
+        p { color: var(--muted); font-size: 1rem; line-height: 1.75; margin-bottom: 18px; }
+        .article-meta { font-size: 0.9rem; color: var(--muted); text-align: center; margin-bottom: 30px; font-style: italic; }
+        .carousel-container { margin: 40px 0; padding: 12px 0 50px; background-color: var(--accent-bg); border-radius: 16px; position: relative; }
+        .carousel-title { font-size: 1.6rem; font-family: var(--font-headings); color: var(--accent); margin-bottom: 25px; text-align: center; position: relative; }
+        .carousel-title::after { content: ''; display: block; width: 50px; height: 2px; background-color: var(--accent); opacity: 0.7; margin: 8px auto 0 auto; border-radius: 1px; }
+        .carousel { position: relative; overflow: hidden; border-radius: var(--carousel-radius); -webkit-tap-highlight-color: transparent; }
+        .carousel-inner { display: flex; user-select: none; cursor: grab; transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); }
+        .carousel-inner.is-dragging { cursor: grabbing; }
+        .carousel-slide { min-width: 100%; padding: 15px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .carousel-slide:hover { transform: translateY(-5px); }
+        .product-image { max-width: 95%; height: auto; max-height: 330px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; box-shadow: var(--card-shadow); }
+        .product-name { font-weight: 700; font-family: var(--font-headings); color: var(--text); font-size: 1.2rem; margin-bottom: 8px; text-align: center; }
+        .product-description { font-size: 0.9rem; color: var(--muted); text-align: center; margin-bottom: 10px; min-height: 40px; }
+        .carousel-dots { position: absolute; bottom: 15px; left: 0; right: 0; text-align: center; z-index: 2; padding: 5px 0; }
+        .carousel-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--love-light); margin: 0 5px; cursor: pointer; border: none; padding: 0; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .carousel-dot:hover { background-color: var(--accent); transform: scale(1.1); }
+        .carousel-dot.active { background-color: var(--accent); transform: scale(1.2); }
+        .paragraph-primary { margin-top: 20px; margin-bottom: 20px; }
+        .paragraph-primary p { padding: 5px 0; }
+        .paragraph-primary p strong { color: var(--accent); font-weight: 600; }
+        .integrated-cta-section { text-align: center; margin-top: 50px; padding: 35px 20px; background-color: var(--accent-bg); border-radius: 12px; border-top: 3px solid var(--accent); box-shadow: var(--card-shadow); }
+        .cta-final-text { font-size: 1.2rem; color: var(--text); line-height: 1.8; margin-bottom: 30px; padding: 0 20px; font-family: var(--font-headings); }
+        .cta-final-text strong { color: var(--accent); font-family: var(--font-special); font-size: 1.5rem; }
+        .integrated-cta-section .button { display: inline-block; padding: 14px 35px; background-color: var(--accent); color: white; text-decoration: none; border-radius: 10px; font-size: 1.1rem; font-weight: 500; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 10px rgba(var(--accent-rgb), 0.2); }
+        .integrated-cta-section .button:hover { background-color: #c7153f; transform: translateY(-3px) scale(1.03); }
+        .footer-note { text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: 40px; }
+        .footer-note a { color: var(--accent); text-decoration: none; }
+        .footer-note a:hover { text-decoration: underline; }
+
 
         @media (max-width: 768px) {
-            .countdown-title { font-size: 1.2rem; margin-bottom: 18px; }
-            .countdown-boxes { gap: 10px; }
-            .countdown-box { min-width: 70px; padding: 10px 15px; border-radius: 10px; }
-            .countdown-box .countdown-number { font-size: 1.8rem; }
-            .countdown-box .countdown-label { font-size: 0.65rem; }
-
+            /* Zarif Geri Sayım Mobil Stilleri */
+            .elegant-countdown-timer { gap: 6px; }
+            .time-block { padding: 8px 12px; min-width: 65px; border-radius: 6px; }
+            .time-value { font-size: 2.2rem; }
+            .time-label { font-size: 0.6rem; }
+            .time-separator { font-size: 1.8rem; }
+            
             h1 { font-size: 2.4rem; }
             h2 { font-size: 1.6rem; }
-            .container { padding: 20px 20px 30px; margin-top: 0; /* Reset top margin if countdown already provides it */}
+            .container { padding: 20px 20px 30px; margin-top: 0;}
             .product-image { max-width: 85%; max-height: 280px;}
         }
         @media (max-width: 480px) {
-            .valentine-countdown {
-                padding: 15px 5px;
-            }
-            .countdown-title {
-                font-size: 1rem;
-                margin-bottom: 12px;
-            }
-            .countdown-boxes {
-                display: flex;
-                justify-content: center; 
-                flex-wrap: nowrap; /* KESİNLİKLE alt satıra sarmasın */
-                gap: 4px;
-                width: 100%;
-                /* overflow-x: auto; /* Gerekirse açılır, ama kutu boyutları ile sığdırmaya çalışın */
-            }
-            .countdown-box {
-                min-width: 55px;
-                flex-grow: 1;   
-                flex-shrink: 1; 
-                flex-basis: 0;  
-                padding: 6px 4px;
-                border-radius: 8px;
-                text-align: center;
-            }
-            .countdown-box .countdown-number {
-                font-size: 1.2rem;
-                margin-bottom: 2px;
-            }
-            .countdown-box .countdown-label {
-                font-size: 0.55rem;
-                white-space: nowrap;
-                margin-top: 1px;
-            }
+            .valentine-countdown { padding: 20px 10px; }
+            .countdown-title { font-size: 1.1rem; margin-bottom: 15px; }
+            .elegant-countdown-timer { gap: 4px; }
+            .time-block { padding: 6px 8px; min-width: 50px; border-radius: 5px; }
+            .time-value { font-size: 1.7rem; }
+            .time-label { font-size: 0.5rem; margin-top: 3px; }
+            .time-separator { font-size: 1.4rem; padding: 0 1px; }
 
             .product-image { max-width: 90%; max-height: 240px;}
             h1 { font-size: 2.2rem; }
@@ -512,146 +254,129 @@
             });
         }
 
-        // CAROUSEL SCRIPT
+        // CAROUSEL SCRIPT (Değişiklik yok, önceki gibi)
         function initializeCarousel(carouselId) {
             const carouselEl = document.getElementById(carouselId);
             if (!carouselEl) return;
-
             const inner = carouselEl.querySelector('.carousel-inner');
             const slides = Array.from(carouselEl.querySelectorAll('.carousel-slide'));
-            const dotsContainer = carouselEl.parentNode.querySelector('.carousel-dots'); 
-
-            if (!dotsContainer) {
-                // console.error("Carousel dots container not found!"); // Hata ayıklama için
-                return;
-            }
+            const dotsContainer = carouselEl.parentNode.querySelector('.carousel-dots');
+            if (!dotsContainer) { return; }
             if (slides.length === 0) return;
-
             let currentIndex = 0;
             let isDragging = false;
             let startPos = 0;
             let currentTranslate = 0;
             let prevTranslate = 0;
-            
-            const slideWidth = () => slides.length > 0 ? slides[0].offsetWidth : 0; 
-
+            const slideWidth = () => slides.length > 0 ? slides[0].offsetWidth : 0;
             function updateDots() {
                 if (!dotsContainer) return;
                 dotsContainer.innerHTML = '';
                 slides.forEach((_, i) => {
                     const dot = document.createElement('button');
                     dot.classList.add('carousel-dot');
-                    if (i === currentIndex) {
-                        dot.classList.add('active');
-                    }
+                    if (i === currentIndex) { dot.classList.add('active'); }
                     dot.setAttribute('aria-label', `${i + 1}. slayda git`);
                     dot.addEventListener('click', () => goToSlide(i));
                     dotsContainer.appendChild(dot);
                 });
             }
-
             function setPositionByIndex() {
-                if(slideWidth() === 0 && slides.length > 0) { 
-                    setTimeout(setPositionByIndex, 100);
-                    return;
-                }
+                if (slideWidth() === 0 && slides.length > 0) { setTimeout(setPositionByIndex, 100); return; }
                 currentTranslate = currentIndex * -slideWidth();
                 prevTranslate = currentTranslate;
                 inner.style.transform = `translateX(${currentTranslate}px)`;
             }
-            
             function dragStart(event) {
                 if (event.type.includes('touch') && event.touches.length > 1) return;
-
                 isDragging = true;
                 startPos = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                inner.style.transition = 'none'; 
+                inner.style.transition = 'none';
                 inner.classList.add('is-dragging');
             }
-
             function drag(event) {
                 if (isDragging) {
-                    if (event.type.includes('touch') && event.touches.length > 1) {
-                        dragEnd(); 
-                        return;
-                    }
+                    if (event.type.includes('touch') && event.touches.length > 1) { dragEnd(); return; }
                     const currentPosition = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
                     currentTranslate = prevTranslate + currentPosition - startPos;
                     inner.style.transform = `translateX(${currentTranslate}px)`;
                 }
             }
-
             function dragEnd() {
                 if (!isDragging) return;
                 isDragging = false;
-                inner.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)'; 
+                inner.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
                 inner.classList.remove('is-dragging');
-
                 const movedBy = currentTranslate - prevTranslate;
-                const threshold = slideWidth() / 4; 
-
-                if (movedBy < -threshold && currentIndex < slides.length - 1) {
-                    currentIndex++;
-                } else if (movedBy > threshold && currentIndex > 0) {
-                    currentIndex--;
-                }
-                
+                const threshold = slideWidth() / 4;
+                if (movedBy < -threshold && currentIndex < slides.length - 1) { currentIndex++; }
+                else if (movedBy > threshold && currentIndex > 0) { currentIndex--; }
                 setPositionByIndex();
                 updateDots();
             }
-            
-            function goToSlide(index) {
-                currentIndex = index;
-                setPositionByIndex();
-                updateDots();
-            }
-            
+            function goToSlide(index) { currentIndex = index; setPositionByIndex(); updateDots(); }
             inner.addEventListener('mousedown', dragStart);
             inner.addEventListener('touchstart', dragStart, { passive: true });
-
-            document.addEventListener('mousemove', drag); 
-            document.addEventListener('touchmove', drag, { passive: true }); 
-
-            document.addEventListener('mouseup', dragEnd); 
-            document.addEventListener('touchend', dragEnd); 
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: true });
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
             document.addEventListener('touchcancel', dragEnd);
-
             let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    setPositionByIndex(); 
-                }, 250);
-            });
-
-            // İlk yüklemede ve resimler yüklendikten sonra pozisyonu ayarla
-            // Eğer sayfa çok hızlı yüklenirse slideWidth 0 olabilir.
-            // Bu yüzden updateDots'u ve setPositionByIndex'i bir window.onload içine almak veya
-            // görsellerin yüklenmesini beklemek daha garantili olabilir.
-            // Şimdilik bu şekilde bırakıyorum, sorun olursa değerlendirilebilir.
+            window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { setPositionByIndex(); }, 250); });
             if (document.readyState === "complete") {
-                 if (slideWidth() === 0 && slides.length > 0) {
-                    setTimeout(setPositionByIndex, 100); 
-                } else {
-                    setPositionByIndex();
-                }
+                 if (slideWidth() === 0 && slides.length > 0) { setTimeout(setPositionByIndex, 100);  } else { setPositionByIndex(); }
                 updateDots();
             } else {
                 window.addEventListener('load', () => {
-                    if (slideWidth() === 0 && slides.length > 0) {
-                        setTimeout(setPositionByIndex, 100); 
-                    } else {
-                        setPositionByIndex();
-                    }
+                    if (slideWidth() === 0 && slides.length > 0) { setTimeout(setPositionByIndex, 100); } else { setPositionByIndex(); }
                     updateDots();
                 });
             }
         }
+        
+        // VALENTINE COUNTDOWN SCRIPT (Zarif Tipografik Stil)
+        function setupElegantCountdownHTML(countdownElement) {
+            countdownElement.innerHTML = `
+                <div class="countdown-title">Sevgililer Günü'ne Kalan Süre</div>
+                <div class="elegant-countdown-timer">
+                    <div class="time-block">
+                        <span class="time-value" id="elegantDays">000</span>
+                        <span class="time-label">Gün</span>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-block">
+                        <span class="time-value" id="elegantHours">00</span>
+                        <span class="time-label">Saat</span>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-block">
+                        <span class="time-value" id="elegantMinutes">00</span>
+                        <span class="time-label">Dakika</span>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-block">
+                        <span class="time-value" id="elegantSeconds">00</span>
+                        <span class="time-label">Saniye</span>
+                    </div>
+                </div>
+            `;
+        }
 
-        // VALENTINE COUNTDOWN SCRIPT
         function startValentineCountdown() {
             const countdownElement = document.getElementById("valentineCountdownContainer");
             if (!countdownElement) return;
+
+            setupElegantCountdownHTML(countdownElement); 
+
+            const daysEl = document.getElementById('elegantDays');
+            const hoursEl = document.getElementById('elegantHours');
+            const minutesEl = document.getElementById('elegantMinutes');
+            const secondsEl = document.getElementById('elegantSeconds');
+
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+                return;
+            }
 
             const targetDate = new Date("2026-02-14T00:00:00").getTime();
 
@@ -661,8 +386,12 @@
 
                 if (distance < 0) {
                     clearInterval(interval);
-                    countdownElement.innerHTML = `<div class="countdown-title">Mutlu Sevgililer Günü! ❤️</div>`;
-                    countdownElement.style.paddingBottom = "20px"; 
+                    // Sadece başlığı ve mesajı göster, zaman bloklarını kaldırmaya gerek yok, JS zaten güncellemeyecek.
+                    // İsterseniz countdownElement.querySelector('.elegant-countdown-timer').style.display = 'none'; ile gizleyebilirsiniz.
+                    countdownElement.querySelector('.countdown-title').innerHTML = "Mutlu Sevgililer Günü! ❤️";
+                    if(countdownElement.querySelector('.elegant-countdown-timer')) {
+                         countdownElement.querySelector('.elegant-countdown-timer').innerHTML = ""; // Zaman bloklarını temizle
+                    }
                     return;
                 }
 
@@ -671,60 +400,32 @@
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                countdownElement.innerHTML =
-                    `<div class="countdown-title">Sevgililer Günü'ne:</div>` +
-                    `<div class="countdown-boxes">` +
-                        `<div class="countdown-box">` +
-                            `<span class="countdown-number">${days}</span>` +
-                            `<small class="countdown-label">Gün</small>` +
-                        `</div>` +
-                        `<div class="countdown-box">` +
-                            `<span class="countdown-number">${hours}</span>` +
-                            `<small class="countdown-label">Saat</small>` +
-                        `</div>` +
-                        `<div class="countdown-box">` +
-                            `<span class="countdown-number">${minutes}</span>` +
-                            `<small class="countdown-label">Dakika</small>` +
-                        `</div>` +
-                        `<div class="countdown-box">` +
-                            `<span class="countdown-number">${seconds}</span>` +
-                            `<small class="countdown-label">Saniye</small>` +
-                        `</div>` +
-                    `</div>`;
+                daysEl.textContent = days.toString().padStart(3, '0');
+                hoursEl.textContent = hours.toString().padStart(2, '0');
+                minutesEl.textContent = minutes.toString().padStart(2, '0');
+                secondsEl.textContent = seconds.toString().padStart(2, '0');
 
             }, 1000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Accent renginin RGB değerlerini CSS değişkeni olarak ayarla
             const accentColorValue = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
             if (accentColorValue) {
                 let r=0, g=0, b=0;
                 if (accentColorValue.startsWith('#')) {
                     const hex = accentColorValue.substring(1);
-                    if (hex.length === 3) {
-                        r = parseInt(hex[0] + hex[0], 16); g = parseInt(hex[1] + hex[1], 16); b = parseInt(hex[2] + hex[2], 16);
-                    } else if (hex.length === 6) {
-                        r = parseInt(hex.substring(0, 2), 16); g = parseInt(hex.substring(2, 4), 16); b = parseInt(hex.substring(4, 6), 16);
-                    }
+                    if (hex.length === 3) { r = parseInt(hex[0] + hex[0], 16); g = parseInt(hex[1] + hex[1], 16); b = parseInt(hex[2] + hex[2], 16); }
+                    else if (hex.length === 6) { r = parseInt(hex.substring(0, 2), 16); g = parseInt(hex.substring(2, 4), 16); b = parseInt(hex.substring(4, 6), 16); }
                 } else if (accentColorValue.startsWith('rgb')) { 
                     const parts = accentColorValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-                    if (parts && parts.length >= 4) {
-                        r = parseInt(parts[1]); g = parseInt(parts[2]); b = parseInt(parts[3]);
-                    }
+                    if (parts && parts.length >= 4) { r = parseInt(parts[1]); g = parseInt(parts[2]); b = parseInt(parts[3]); }
                 }
-                if (r || g || b ) { 
-                    document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`);
-                } else { 
-                    // Varsayılan bir RGB ayarla eğer parse edilemezse
-                    document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); 
-                }
-            } else { // Accent rengi tanımlı değilse varsayılan bir RGB ayarla
-                 document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`);
-            }
+                if (r || g || b ) { document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`); }
+                else { document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); }
+            } else { document.documentElement.style.setProperty('--accent-rgb', `225, 29, 72`); }
             
             initializeCarousel('productCarousel');
-            startValentineCountdown(); // Geri sayımı başlat
+            startValentineCountdown();
         });
 </script>
 </body>
